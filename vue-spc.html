@@ -37,13 +37,12 @@
             </form>
         </div>
     </nav>
-    <div class="container" id="content">
-        <h1>{{ pages[activePage].pageTitle }}</h1>
-        <p>{{ pages[activePage].content }}</p>
-    </div>
+    <page-viewer
+        :page="pages[activePage]"
+    ></page-viewer>
 
     <script>
-        Vue.createApp({
+        let app = Vue.createApp({
             data(){
                 return {
                     activePage: 0,
@@ -69,14 +68,27 @@
             },
             methods: {
                 changeTheme() {
-                    let theme = 'light';
-                    if(this.theme == 'light') {
-                        theme == 'dark';
+                    let theme = 'dark';
+                    if (this.theme == 'dark') {
+                        theme = 'light';
                     }
-                    this.theme = theme;
+                    this.theme = theme; 
                 }
             }
-        }).mount('body')
+        });
+        app.component('page-viewer',{
+            props: ['page'],
+            template:`
+            <div class="container">
+                <h1>{{page.pagaTitle}}</h1>
+                <p>{{page.content}}</p>
+            </div>
+            `
+        });
+
+
+
+        app.mount('body')
     </script>
 </body>
 </html>
